@@ -1,20 +1,34 @@
-runtime: python3.9
+runtime: nodejs18
+instance_class: F1
 api_version: 1
 threadsafe: true
+
 handlers:
+  # Serve index.html for requests to the root URL ("/")
   - url: /
     static_files: src/my-angular-app/index.html
     upload: src/my-angular-app/index.html
+
+  # Serve static files from the "dist" directory
   - url: /
-    static_dir: dist/my-angular-app
-    
+    static_dir: src/my-angular-app
+
+# Files and directories to skip during deployment
 skip_files:
   - e2e/
   - node_modules/
   - src/
-  - coverage
-  - ^(.*/)?\..*$
-  - ^(.*/)?.*\.json$
-  - ^(.*/)?.*\.md$
-  - ^(.*/)?.*\.yaml$
+  - coverage/
+  - \.git/
+  - \.hg/
+  - \.svn/
+  - \.vscode/
+  - \.idea/
+  - \.npmrc
+  - \.yarnrc
   - ^LICENSE
+  - ^README\.md
+  - ^angular\.json
+  - ^package-lock\.json
+  - ^package\.json
+  - ^tsconfig\.json
