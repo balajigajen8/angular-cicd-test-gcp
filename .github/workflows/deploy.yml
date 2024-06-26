@@ -19,11 +19,19 @@ jobs:
         node-version: '18'
 
     - name: Install dependencies
+      working-directory: ./my-angular-app/
       run: npm install
 
     - name: Build Angular application
+      working-directory: ./my-angular-app/
       run: npm run build --configuration=production
-
+      
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: dist
+        path: ./my-angular-app/dist
+        
     - name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v1
       with:
