@@ -102,3 +102,16 @@
     "analytics": "b4a54afd-d118-42f7-ba0f-4a73fff2824b"
   }
 }
+{
+  "projects": {
+    "my-angular-app": {
+      "architect": {
+        "build": {
+          "options": {
+            "outputPath": "dist/my-angular-app"
+          }
+        }
+      }
+    }
+  }
+}
