@@ -37,13 +37,10 @@ jobs:
         working-directory: ./my-angular-app/
         run: npm run build
         
-      - name: Create folder and store ZIP
+      - name: Create deployment folder and package app
         run: |
-           mkdir deployment
-           mv dist/my-angular-app deployment/
-           cd deployment
-           zip -r my-angular-app.zip my-angular-app
-           cd ..
+          mkdir deployment
+          zip -r deployment/my-angular-app.zip .
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
