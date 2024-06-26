@@ -40,6 +40,18 @@ jobs:
       - name: Debugging - List directory contents
         run: ls -R
 
+      - name: Debugging - List build output contents
+        run: ls -al dist
+
+      - name: Zip build output
+        run: |
+          if [ -d "dist" ]; then
+            zip -r my-angular-app.zip dist/*
+          else
+            echo "Error: dist directory does not exist"
+            exit 1
+          fi
+
       - name: Zip build output
         run: zip -r my-angular-app.zip dist/*
         
