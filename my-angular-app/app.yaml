@@ -2,22 +2,22 @@ runtime: nodejs18
 instance_class: F1
 env_variables:
   NODE_ENV: 'production'
-  
+
 handlers:
+  # Serve index.html for the root path '/'
   - url: /
     secure: always
     static_files: dist/my-angular-app/index.html
     upload: dist/my-angular-app/index.html
 
-  #  Routing rules for resources, css, js, images etc. Any file with format filename.ext
-  - url: /(.*\.(.+))$
+  # Serve static files with specific extensions (css, js, images, etc.)
+  - url: /(.*\.(css|js|png|jpg|gif|svg|woff|woff2|ttf|otf|eot))
     secure: always
-    static_files: dist/my-angular-app/index.html/\1
-    upload: dist/my-angular-app/(.*\.(.+))$
+    static_files: dist/my-angular-app/\1
+    upload: dist/my-angular-app/(.*\.(css|js|png|jpg|gif|svg|woff|woff2|ttf|otf|eot))
 
-  #  Routing rule for Angular Routing
-  - url: /(.*)
+  # Handle all other routes by serving index.html (for Angular routing)
+  - url: /.*
     secure: always
     static_files: dist/my-angular-app/index.html
     upload: dist/my-angular-app/index.html
-
