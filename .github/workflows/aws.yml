@@ -36,21 +36,6 @@ jobs:
       - name: Build Angular app
         working-directory: ./my-angular-app/
         run: npm run build
-
-      - name: Debugging - List build output contents
-        run: ls -al dist
-
-      - name: Zip build output
-        run: |
-          if [ -d "dist" ]; then
-            zip -r my-angular-app.zip dist/*
-          else
-            echo "Error: dist directory does not exist"
-            exit 1
-          fi
-
-      - name: Zip build output
-        run: zip -r my-angular-app.zip dist/*
         
       - name: Upload artifact
         uses: actions/upload-artifact@v2
