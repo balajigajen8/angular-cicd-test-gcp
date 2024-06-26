@@ -34,6 +34,9 @@ jobs:
         working-directory: ./my-angular-app/
         run: npm run build
 
+      - name: Debugging - List directory contents
+        run: ls -R
+
       - name: Zip build output
         run: zip -r my-angular-app.zip dist/*
         
