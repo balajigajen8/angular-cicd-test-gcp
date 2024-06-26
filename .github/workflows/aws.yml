@@ -16,7 +16,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '18'  # adjust to your Node.js version
+          node-version: '14'  # adjust to your Node.js version
 
       - name: Install AWS CLI
         run: |
@@ -36,28 +36,33 @@ jobs:
       - name: Build Angular app
         working-directory: ./my-angular-app/
         run: npm run build
-        
+
+      - name: Generate timestamp
+        id: timestamp
+        run: echo "::set-output name=date::$(date +'%Y%m%d%H%M%S')"
+
       - name: Create deployment folder and package app
         run: |
           mkdir deployment
-          zip -r deployment/my-angular-app-$(date +"%Y%m%d%H%M%S").zip .
+          zip -r deployment/my-angular-app-${{ steps.timestamp.outputs.date }}.zip .
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
           name: my-angular-app
-          path: deployment/my-angular-app-$(date +"%Y%m%d%H%M%S").zip
+          path: deployment/my-angular-app-${{ steps.timestamp.outputs.date }}.zip
           if-no-files-found: warn
 
       - name: Deploy to Elastic Beanstalk
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: 'us-east-1'  # replace with your AWS region, e.g., 'us-west-2'
+          AWS_DEFAULT_REGION: 'us-east-1'  # replace with your AWS region
         run: |
-          aws s3 cp deployment/my-angular-app-$(date +"%Y%m%d%H%M%S").zip s3://testing-angular27/  # replace with your S3 bucket name
-          aws elasticbeanstalk create-application-version --application-name testing-angular --version-label $GITHUB_SHA --source-bundle S3Bucket="testing-angular27",S3Key="my-angular-app-$(date +"%Y%m%d%H%M%S").zip"
+          aws s3 cp deployment/my-angular-app-${{ steps.timestamp.outputs.date }}.zip s3://testing-angular27/
+          aws elasticbeanstalk create-application-version --application-name testing-angular --version-label $GITHUB_SHA --source-bundle S3Bucket="your-s3-bucket-name",S3Key="testing-angular27-${{ steps.timestamp.outputs.date }}.zip"
           aws elasticbeanstalk update-environment --application-name testing-angular --environment-name testing-angular-env --version-label $GITHUB_SHA
 
       - name: Clean up
-        run: rm -rf node_modules my-angular-app.zip
+        run: |
+          rm -rf deployment
