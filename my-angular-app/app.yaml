@@ -11,23 +11,3 @@ handlers:
   # Serve static files from the "dist" directory
   - url: /
     static_dir: src/my-angular-app
-
-# Files and directories to skip during deployment
-skip_files:
-  - e2e/
-  - node_modules/
-  - src/
-  - coverage/
-  - \.git/
-  - \.hg/
-  - \.svn/
-  - \.vscode/
-  - \.idea/
-  - \.npmrc
-  - \.yarnrc
-  - ^LICENSE
-  - ^README\.md
-  - ^angular\.json
-  - ^package-lock\.json
-  - ^package\.json
-  - ^tsconfig\.json
