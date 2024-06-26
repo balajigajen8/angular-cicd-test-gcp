@@ -6,18 +6,18 @@ env_variables:
 handlers:
   - url: /
     secure: always
-    static_files: my-angular-app/index.html
-    upload: my-angular-app/index.html
+    static_files: dist/my-angular-app/index.html
+    upload: dist/my-angular-app/index.html
 
   #  Routing rules for resources, css, js, images etc. Any file with format filename.ext
   - url: /(.*\.(.+))$
     secure: always
-    static_files: ./my-angular-app/index.html/\1
-    upload: my-angular-app/(.*\.(.+))$
+    static_files: dist/my-angular-app/index.html/\1
+    upload: dist/my-angular-app/(.*\.(.+))$
 
   #  Routing rule for Angular Routing
   - url: /(.*)
     secure: always
-    static_files: my-angular-app/index.html
-    upload: my-angular-app/index.html
+    static_files: dist/my-angular-app/index.html
+    upload: dist/my-angular-app/index.html
 
