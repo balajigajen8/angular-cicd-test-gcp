@@ -37,11 +37,17 @@ jobs:
         working-directory: ./my-angular-app/
         run: npm run build
         
+      - name: Archive production build
+        run: |
+          cd dist/my-angular-app
+          zip -r ../../my-angular-app.zip .
+
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: my-angular-app
-          path: my-angular-app.zip
+         name: my-angular-app
+         path: my-angular-app.zip
+         if-no-files-found: warn
 
       - name: Deploy to Elastic Beanstalk
         env:
