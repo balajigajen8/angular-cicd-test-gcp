@@ -41,7 +41,7 @@ jobs:
     - name: Deploy to App Engine
       run: |
         # Set the correct filename for the service account key
-        SA_KEY_FILE=$(echo /home/runner/work/angular-cicd-test-gcp/angular-cicd-test-gcp/gha-creds-*.json)
+        SA_KEY_FILE=$(echo ./my-angular-app/gha-creds-*.json)
         gcloud auth activate-service-account --key-file="${SA_KEY_FILE}"
         gcloud app deploy ./my-angular-app/app.yaml --quiet --project ${{ secrets.GCP_PROJECT_ID }}
       env:
