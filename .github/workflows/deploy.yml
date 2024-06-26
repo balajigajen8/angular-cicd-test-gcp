@@ -26,11 +26,11 @@ jobs:
       working-directory: ./my-angular-app/
       run: npm run build --configuration=production
       
-    - name: Upload artifact
+     - name: Upload artifact
       uses: actions/upload-artifact@v2
       with:
         name: dist
-        path: ./my-angular-app/dist
+        path: ./dist
         
     - name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v1
@@ -51,4 +51,3 @@ jobs:
 
     - name: Deploy to Google App Engine
       run: gcloud app deploy app.yaml --quiet
-Key Changes and Considerations:
