@@ -1,7 +1,5 @@
 runtime: nodejs18
-
-instance_class: F2
-
+instance_class: F1
 env_variables:
   NODE_ENV: 'production'
 
@@ -14,5 +12,5 @@ handlers:
     static_dir: dist/my-angular-app
 
   - url: /(.*)
-    static_files: dist/my-angular-app/$1
+    static_files: dist/my-angular-app/\1
     upload: dist/my-angular-app/(.*)
