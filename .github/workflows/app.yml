@@ -24,7 +24,7 @@ jobs:
 
       - name: Build Angular app
         working-directory: ./my-angular-app/
-        run: npm run build
+        run: npm run build -- --configuration=production
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
