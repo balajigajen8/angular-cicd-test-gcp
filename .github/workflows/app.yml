@@ -52,6 +52,3 @@ jobs:
       - name: Get deployed application URL
         id: get-app-url
         run: echo "::set-output name=url::$(gcloud app browse --project=${{ secrets.GCP_PROJECT_ID }} --no-launch-browser --format='value(url)')"
-
-      - name: Display deployed application URL
-        run: echo "Deployed Application URL: ${{ steps.get-app-url.outputs.url }}"
