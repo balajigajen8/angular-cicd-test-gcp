@@ -37,9 +37,12 @@ jobs:
       with:
         credentials_json: ${{ secrets.GCP_SA_KEY }}
         export_default_credentials: true
+        
     - name: Deploy to App Engine
       run: |
-        gcloud auth activate-service-account --key-file=${{ github.workspace }}/gha-creds-*.json
+        # Set the correct filename for the service account key
+        SA_KEY_FILE=$(echo /home/runner/work/angular-cicd-test-gcp/angular-cicd-test-gcp/gha-creds-*.json)
+        gcloud auth activate-service-account --key-file="${SA_KEY_FILE}"
         gcloud app deploy ./my-angular-app/app.yaml --quiet --project ${{ secrets.GCP_PROJECT_ID }}
       env:
         CLOUDSDK_CORE_DISABLE_PROMPTS: '1'
