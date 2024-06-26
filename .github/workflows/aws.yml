@@ -37,9 +37,6 @@ jobs:
         working-directory: ./my-angular-app/
         run: npm run build
 
-      - name: Debugging - List directory contents
-        run: ls -R
-
       - name: Debugging - List build output contents
         run: ls -al dist
 
