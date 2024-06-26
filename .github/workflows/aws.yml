@@ -37,15 +37,19 @@ jobs:
         working-directory: ./my-angular-app/
         run: npm run build
         
-      - name: Archive production build
+      - name: Create folder and store ZIP
         run: |
-          zip -r my-angular-app.zip .
+           mkdir deployment
+           mv dist/my-angular-app deployment/
+           cd deployment
+           zip -r my-angular-app.zip my-angular-app
+           cd ..
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
           name: my-angular-app
-          path: my-angular-app.zip
+          path: deployment/my-angular-app.zip
           if-no-files-found: warn
 
       - name: Deploy to Elastic Beanstalk
@@ -54,7 +58,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: 'us-east-1'  # replace with your AWS region, e.g., 'us-west-2'
         run: |
-          aws s3 cp my-angular-app.zip s3://testing-angular27/  # replace with your S3 bucket name
+          aws s3 cp deployment/my-angular-app.zip s3://testing-angular27/  # replace with your S3 bucket name
           aws elasticbeanstalk create-application-version --application-name testing-angular --version-label $GITHUB_SHA --source-bundle S3Bucket="testing-angular27",S3Key="my-angular-app.zip"
           aws elasticbeanstalk update-environment --application-name testing-angular --environment-name testing-angular-env --version-label $GITHUB_SHA
 
