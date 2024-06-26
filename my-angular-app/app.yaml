@@ -8,9 +8,6 @@ handlers:
     static_files: dist/my-angular-app/index.html
     upload: dist/my-angular-app/index.html
 
-  - url: /
-    static_dir: dist/my-angular-app
-
   - url: /(.*)
     static_files: dist/my-angular-app/\1
     upload: dist/my-angular-app/(.*)
