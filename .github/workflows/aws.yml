@@ -40,13 +40,13 @@ jobs:
       - name: Create deployment folder and package app
         run: |
           mkdir deployment
-          zip -r deployment/my-angular-app.zip .
+          zip -r deployment/my-angular-app-$(date +"%Y%m%d%H%M%S").zip .
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
           name: my-angular-app
-          path: deployment/my-angular-app.zip
+          path: deployment/my-angular-app-$(date +"%Y%m%d%H%M%S").zip
           if-no-files-found: warn
 
       - name: Deploy to Elastic Beanstalk
@@ -55,8 +55,8 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: 'us-east-1'  # replace with your AWS region, e.g., 'us-west-2'
         run: |
-          aws s3 cp deployment/my-angular-app.zip s3://testing-angular27/  # replace with your S3 bucket name
-          aws elasticbeanstalk create-application-version --application-name testing-angular --version-label $GITHUB_SHA --source-bundle S3Bucket="testing-angular27",S3Key="my-angular-app.zip"
+          aws s3 cp deployment/my-angular-app-$(date +"%Y%m%d%H%M%S").zip s3://testing-angular27/  # replace with your S3 bucket name
+          aws elasticbeanstalk create-application-version --application-name testing-angular --version-label $GITHUB_SHA --source-bundle S3Bucket="testing-angular27",S3Key="my-angular-app-$(date +"%Y%m%d%H%M%S").zip"
           aws elasticbeanstalk update-environment --application-name testing-angular --environment-name testing-angular-env --version-label $GITHUB_SHA
 
       - name: Clean up
