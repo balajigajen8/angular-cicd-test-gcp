@@ -30,7 +30,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: dist
-        path: ./dist
+        path: ./my-angular-app/dist
         
     - name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v1
