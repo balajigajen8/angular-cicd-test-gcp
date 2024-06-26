@@ -4,8 +4,20 @@ env_variables:
   NODE_ENV: 'production'
   
 handlers:
-  - url: /.*
+  - url: /
     secure: always
-    redirect_http_response_code: 301
-    script: auto
+    static_files: www/index.html
+    upload: www/index.html
+
+  #  Routing rules for resources, css, js, images etc. Any file with format filename.ext
+  - url: /(.*\.(.+))$
+    secure: always
+    static_files: www/\1
+    upload: www/(.*\.(.+))$
+
+  #  Routing rule for Angular Routing
+  - url: /(.*)
+    secure: always
+    static_files: www/index.html
+    upload: www/index.html
 
